@@ -8,9 +8,20 @@ permissions:
   id-token: write
 
 jobs:
-  build-with-docker:
-    name: Build with Docker
-    runs-on: ubuntu-20.04
+
+  build-with-docker1:
+    name: Build with Docker1
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          submodules: recursive
+      - name: Build the Docker image
+        run: docker build . --file ./Dockerfile
+          
+  build-with-docker2:
+    name: Build with Docker2
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
         with:
@@ -22,14 +33,14 @@ jobs:
           cache-from: type=gha
           cache-to: type=gha,mode=max
 
-  build-with-depot:
-    name: Build with Depot
-    runs-on: ubuntu-20.04
-    steps:
-      - uses: actions/checkout@v3
-        with:
-          submodules: recursive
-      - uses: depot/setup-action@v1
-      - uses: depot/build-push-action@v1
-        with:
-          context: ./upstream
+  #build-with-depot:
+  #  name: Build with Depot
+  #  runs-on: ubuntu-20.04
+  #  steps:
+  #    - uses: actions/checkout@v3
+  #      with:
+  #        submodules: recursive
+  #    - uses: depot/setup-action@v1
+  #    - uses: depot/build-push-action@v1
+  #      with:
+  #        context: ./upstream
